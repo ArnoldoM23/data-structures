@@ -1,3 +1,5 @@
+
+
 var Tree = function(value){
   var newTree = {};
   _.extend(newTree, treeMethods)
@@ -19,21 +21,42 @@ treeMethods.addChild = function(value){
 };
 
 treeMethods.contains = function(target){
+  var state = false
 
-  for(var key in this.children){
-    if (this.children[key].value === target){
-      return true;
-    }else if (this.children[key][0]){
-      for(var key in this.children[key]){
-        if (this.children[key][0].value === target) {
-          return true;
-        } 
+  function recur (children, target){
+    for(var key in children){
+      if (children[key].value === target) {
+        state= true; 
+      } else if (Object.keys(children[key]).length > 0){
+        console.log("this is the childrens children", children[key].children);
+        recur(children[key].children, target)
+      } else {
+        state = false;
       }
-    } else 
-    {
-      return false;
     }
+
+    console.log('this is state', state)
+
+    return state;
   }
+    return recur(this.children, target);
+
+
+
+  // for(var key in this.children){
+  //   if (this.children[key].value === target){
+  //     return true;
+  //   }else if (this.children[key][0]){
+  //     for(var key in this.children[key]){
+  //       if (this.children[key][0].value === target) {
+  //         return true;
+  //       } 
+  //     }
+  //   } else 
+  //   {
+  //     return false;
+  //   }
+  // }
 };
 
 
