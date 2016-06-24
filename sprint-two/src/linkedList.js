@@ -13,10 +13,26 @@ var LinkedList = function(){
     }
   };
 
-  list.removeHead = function(){
+  list.removeHead = function (){
+//if check to see if head is not null; -->  remove the head
+//then point the head to the tail.
+//tail.next will to head.next
+  var current = this.head;
+  var previous = this.head.value
+  if (this.head !== null){
+   this.head = this.tail;
+  }
+ return previous;
   };
 
   list.contains = function(target){
+    if (this.head.value === target){
+      return true;
+    } else if (this.tail.value === target){
+      return true;
+    } else {
+      return false
+    } 
   };
 
   return list;
@@ -33,4 +49,5 @@ var Node = function(value){
 
 /*
  * Complexity: What is the time complexity of the above functions?
+
  */
