@@ -69,7 +69,28 @@ var BinarySearchTree = function(value){
   };
 
   storage.depthFirstLog = function (callback){
-  
+    // create a recursive function that takes in a callback and a node
+      // if the node is not null 
+        // if the node value is not undefined
+          // invoke the callback passing in the value
+        // if the node right is not null
+          // invoke the recusive function passing the node and the callback
+        // if the node left is not null
+          // invoke the recursive function passing the node and the callback.
+    var depthRecur = function (callback, node){
+      if (node !== null){
+        if(node.value !== undefined){
+         callback(node.value);
+        }
+        if(node.right !== null){
+         return depthRecur(callback, node.right)
+        }
+        if(node.left !== null){
+         return depthRecur(callback, node.left)
+        }
+      }
+    }
+    return depthRecur(callback, storage.head)
   }; 
 
   return storage;
