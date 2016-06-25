@@ -25,7 +25,6 @@ HashTable.prototype.retrieve = function(k){
   // check for match and return if match exists
 
   _.each(this._storage[i], function(val){
-    console.log('val ',val)
     if(val[0] === k){
       console
       result = val[1]
