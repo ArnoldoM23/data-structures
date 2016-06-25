@@ -1,5 +1,4 @@
 
-
 var Tree = function(value){
   var newTree = {};
   _.extend(newTree, treeMethods)
@@ -7,19 +6,14 @@ var Tree = function(value){
   newTree.counter = 0;
   // your code here
   newTree.children = {};  // fix me
-
   return newTree;
 };
-
-
 
 var treeMethods = {};
 
 treeMethods.addChild = function(value){
   this.children[this.counter++] = new Tree(value);
-
 };
-
 treeMethods.contains = function(target){
   var state = false
 
@@ -28,21 +22,14 @@ treeMethods.contains = function(target){
       if (children[key].value === target) {
         state= true; 
       } else if (Object.keys(children[key]).length > 0){
-        console.log("this is the childrens children", children[key].children);
         recur(children[key].children, target)
       } else {
         state = false;
       }
     }
-
-    console.log('this is state', state)
-
     return state;
   }
     return recur(this.children, target);
-
-
-
   // for(var key in this.children){
   //   if (this.children[key].value === target){
   //     return true;
