@@ -8,7 +8,7 @@ var Stack = function() {
   var stacked = {};
   stacked.storage = {};
   stacked.counter = 0;
-  _.extend(stacked, stackMethods);
+  // _.extend(stacked, stackMethods);
   return stacked;
 
 };

@@ -28,10 +28,8 @@ queueMethods.dequeue = function() {
 };
 
 queueMethods.size = function() {
-  console.log(this._end, 'start= ', this._start)
   return this._end - this._start;
 };
-
 
 // var Queue = function(){
 //   // Hey! Rewrite in the new style. Your code will wind up looking very similar,

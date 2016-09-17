@@ -16,7 +16,6 @@ var Queue = function(){
 
   someInstance.dequeue = function(){
     var toBeRemoved = storage[removing];
-    console.log(counter)
     delete storage[removing];
     removing++;
     size --;
