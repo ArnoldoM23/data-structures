@@ -2,9 +2,11 @@ var BinarySearchTree = function(value){
   this.value = value;
   this.right = null;
   this.left = null;
+  this.size = 1;
 };
 
 BinarySearchTree.prototype.insert = function(value){
+  this.size++;
   if (value < this.value) {
     if (this.left === null) {
       this.left = new BinarySearchTree(value);
@@ -13,9 +15,16 @@ BinarySearchTree.prototype.insert = function(value){
     }
   }else if (value > this.value) {
     if (this.right === null) {
+      
       this.right = new BinarySearchTree(value);
     }else{
       this.right.insert(value);
+    }
+  }
+
+  if (this.isBinaryTreeBalanced() === false) {
+    if (this.size >3) {
+      this.rebalance();
     }
   }
   return;
@@ -51,20 +60,21 @@ BinarySearchTree.prototype.depthFirstLog = function(cb){
   }
 }
 
-BinarySearchTree.prototype.breadthFirstLog = function(){
+BinarySearchTree.prototype.breadthFirstLog = function(cb){
   var tree = this;
   var queue = [tree];
   var list = []
   while (queue.length > 0){
     var currentTree = queue.shift();
-    console.log('currentTree value', currentTree.value);
     list.push(currentTree.value)
 
     if (currentTree.left) {
       queue.push(currentTree.left);
+      cb(currentTree.left)
     }
     if (currentTree.right) {
       queue.push(currentTree.right);
+      cb(currentTree.right)
     }
   }
   return list
@@ -88,17 +98,39 @@ BinarySearchTree.prototype.isBinaryTreeBalanced = function () {
   if (this === null) {
     return false;
   }
-  return this.maxDepth(this) - this.minDepth(this) <= 1;
+  return   this.minDepth(this)  * 2 >= this.maxDepth(this);
 }
 
 BinarySearchTree.prototype.rebalance = function(){
-  
+  var treeList = this.breadthFirstLog(function(tree){ tree = null})
+  // new root for tree.
+  var mid = Math.floor(treeList.length / 2)
+  this.value = treeList[mid];
+  // make left and right subarrays.
+  var left = treeList.slice(0, mid)
+  var right = treeList.slice(mid)
+  this.size = 0;
+  while(right.length > 0 || left.length > 0){
+    // midpoints for left and right array.
+    var midLeft = Math.floor(left.length / 2);
+    var midRight = Math.floor(right.length / 2);
+    // left and right midpoint value for insert.
+    var rightInsert = right.splice(midRight,1)[0]
+    var leftInsert = left.splice(midLeft,1)[0]
+    // insert new values;
+    if (leftInsert) {
+     this.insert(leftInsert);
+    }
+    if (rightInsert) {
+     this.insert(rightInsert);
+    }
+  }
 }
+/*
+ * Complexity: What is the time complexity of the above functions?
+ */
 
 
-BinarySearchTree.prototype.rebalance = function(){
-  
-}
 
 
 

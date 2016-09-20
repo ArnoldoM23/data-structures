@@ -4,24 +4,69 @@ var LinkedList = function(){
   list.tail = null;
 
   list.addToTail = function(value){
+    var node = new Node(value);
     if (!list.head) {
-      list.head = Node(value);
+      list.head = node;
       list.tail = list.head;
     }else{
-      list.tail.next = Node(value);
+      list.tail.next = node;
+      node.previous = list.tail;
       list.tail = list.tail.next; 
     }
-  console.log(list)
   };
 
   list.removeHead = function(){
     if (list.head !== null) {
       var chopHead = list.head.value;
       list.head = list.head.next;
+      if (list.head) {
+       list.head.previous = null; 
+      }
       return chopHead;
     }
     return null;
   };
+
+  list.removeNode = function(target){
+    if (list.head !== null) {
+      var current = list.head;
+
+      if (list.head.value === target) {
+        list.removeHead();
+      }else{
+        while(current){
+          if (current.value === target) {
+            var deletedNode = current;
+            current.previous.next = current.next;
+            current.next.previous = current.previous;
+            // console.log('deletedNode', deletedNode)
+            return deletedNode;
+          }
+          current = current.next;
+        }  
+      }
+    }
+  }
+
+  list.addToHead = function(value){
+    var newHead = new Node(value);
+    var currentHead = list.head
+    if (currentHead) {
+      newHead.next = currentHead;
+      currentHead.previous = newHead;
+      list.head = newHead;
+    }
+  }
+
+  list.removeTail = function(){
+    if (list.head) {
+      var currentTail = list.tail;
+      list.tail = currentTail.previous;
+      list.tail.next = null;
+      list.tail.previous = currentTail.previous.previous;
+    }
+
+  }
 
   list.contains = function(target){
     if (!list.head) { return false; }
@@ -44,17 +89,17 @@ var LinkedList = function(){
       return recurse(node.next)
     })(list.head);
   };
+
   return list;
 };
 
-var Node = function(value){
-  var node = {};
-
-  node.value = value;
-  node.next = null;
-
-  return node;
+function Node(value){
+  this.value = value;
+  this.next = null;
+  this.previous = null;
 };
+
+
 
 
 // Double linked list
