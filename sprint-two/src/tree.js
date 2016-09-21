@@ -45,11 +45,35 @@ treeMethods.removeFromParent = function(value){
   }
 }
 
+treeMethods.map = function(cb){
+  var theNewTree = Tree(cb(this.value));
+  function recurse(oldTree, newTree){
+    if (!oldTree.children) {
+      return
+    }
+
+    for (var i = 0; i < oldTree.children.length; i++) {
+      var child = oldTree.children[i];
+      newTree.addChild(cb(child.value))
+      recurse(child, newTree.children[i])
+    }
+
+  }
+  recurse(this, theNewTree);
+  return theNewTree;
+}
+
 
 function Node(value){
   this.value = value;
   this.children = [];
 }
+
+
+/*
+ * Complexity: What is the time complexity of the above functions?
+ */
+
 
 /*
   Complexity: What is the time complexity of the above functions?
